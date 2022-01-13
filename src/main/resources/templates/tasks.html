@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <title>My Todo</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1><span data-th-text="${userName}"></span>'s TODOs</h1>
+            </div>
+            <div class="col">
+                <h2>powered by Redis</h2>
+            </div>
+        </div>
+        <div class="row">
+            <form action="#" data-th-action="@{/task}" method="post">
+                <input type="hidden" name="userName" data-th-value="${userName}">
+                <input type="hidden" name="contents" data-th-value="${contents}">
+                <div class="col">
+                    <div class="mb-2">
+                        <div class="mb-2 input-group">
+                            <!-- <label for="taskName" class="form-label">Task Name:</label> -->
+                            <input type="text" name="taskName" class="form-control" placeholder="Please enter a task">
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary btn-lg">Add Task</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h2 data-th-if="${tasks == null || tasks.size() == 0}">There are no tasks</h2>
+                    </div>
+
+                    <div data-th-unless="${tasks == null || tasks.size() == 0}">
+                        <h2>Your tasks</h2>
+                        <ul class="row list-group" data-th-each="t : ${tasks}">
+                            <li class="list-group-item" data-th-text="${t}"></li>
+                        </ul>
+
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-danger btn-lg" data-th-formaction="@{/task/save}" >Save</button>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+
+
+
+</body>
+</html>
